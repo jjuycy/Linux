@@ -1,0 +1,23 @@
+commands模块是python的内置模块，他共有三个函数，使用help(commands)可以查看到
+1.commands.getstatusoutput(cmd)返回一个元组（status，output） 
+status(int类型)代表的shell命令的返回状态，如果成功的话是0；output(string类型)是shell的返回的结果
+
+exp:
+import commands
+status,output = commands.getstatusoutput("netstat -luntp")
+print status
+print output
+
+
+2.commands.getoutput('shell command')
+执行shell命令，返回结果（string类型）
+exp:
+>>> commands.getoutput('pwd')
+'/home/jju'
+
+
+3.commands.getstatus('file')
+它返回 ls -ld file 的结果（String）(返回结果有点奇怪）
+exp:
+>>> commands.getstatus('admin.tar')
+'-rw-rw-r-- 1 user group 829440 Jan 29 10:36 admin.tar'
