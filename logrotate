@@ -1,0 +1,57 @@
+自动日志轮转(logrotate):
+配置 
+logrotate的基础配置文件为/etc/logrotate.conf，在/etc目录下还有个文件夹/etc/logrotate.d，用户可以将自己的配置文件放在这个文件夹中。
+这个文件夹中所有的文件都会被读取，然后在运行logrotate的时候被执行。
+logrotate基于cron执行，默认每天执行一次。cron的配置文件为/etc/cron.daily/logrotate。如果不进行额外的配置，默认会在每天凌晨运行一次.
+
+
+logrotate有两种模式，create和copytruncate
+
+create模式：
+
+logrotate重命名正在写入的日志文件的文件名，由于读写文件使用文件inode，所以重命名不影响日志继续写入。
+重建新的日志文件，文件名和原来日志文件一样。原程序使用inode继续往旧日志文件写日志。
+程序relaod，触发程序获取新日志inode，新日志写入到新的日志文件中。
+这种方式需要依赖程序有reload功能，一般kill -HUP pid能触发程序relaod，nginx还可以使用kill -USR1 pid单独触发日志relaod。
+
+copytruncate模式：
+
+对老日志文件进行拷贝，生成日志的备份；
+程序清空日志文件，例如echo > logfile；
+程序往清空后的日志继续写日志，由于程序使用O_APPEND方式打开日志文件，日志便能重第一行开始重新写入。
+这种方式会存在日志丢失的风险。旧日志拷贝后到新日志写入空文件，期间的日志内容便丢失了。
+
+
+模板nginx的日志切割
+
+/var/log/nginx/*log {
+    create 0644 nginx nginx
+    daily
+    rotate 5
+    missingok
+    notifempty
+    compress
+    sharedscripts
+    postrotate
+        /bin/kill -USR1 `cat /run/nginx.pid 2>/dev/null` 2>/dev/null || true
+    endscript
+}
+
+参数解析：
+create是指定rotation后新log file的相关属性，其他属性将忽略，和original log file相同
+
+daily 表示每天执行
+
+rotate 5 表示log file循环保留多少份
+
+missingok 表示如果日志文件不存在，不报错跳过
+
+notifempty 表示日志如果为空，不执行rotate
+
+compress 表示老日志使用gzip压缩保存
+
+sharedscripts 表示对多个日志，例如//var/log/nginx/*log，postrotate和endscript的script只执行1次，否则对多个日志调用多次
+
+postrotate/endscript 表示，在其中的script，是在日志文件rotate后才执行，同理还有prerotate/endscript
+
+参考链接：https://linux.cn/article-4126-1.html
