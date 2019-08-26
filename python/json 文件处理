@@ -1,0 +1,7 @@
+json 模块提供了一种很简单的方式来编码和解码JSON数据。
+主要的四个函数：
+1.json.dumps()和json.loads()是json格式处理函数
+　　(1)json.dumps()函数是将一个Python数据类型列表进行json格式的编码
+　　(2)json.loads()函数是将json格式数据转换为字典
+2.json.dump()和json.load()主要用来读写json文件函数
+   编码和解码JSON数据
