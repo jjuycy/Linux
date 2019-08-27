@@ -1,0 +1,49 @@
+Python内置了字典：dict的支持，dict全称dictionary，使用键-值（key-value）存储。
+
+字典是一种通过名字或者关键字引用的得数据结构，其键可以是数字、字符串、元组，这种结构类型也称之为映射。字典类型是Python中唯一內建的映射类型，基本的操作包括如下：
+
+(1) len() : 返回字典中 键:值对 的数量
+
+(2) d[k] : 返回关键字对应的值；
+
+(3) d[k] = v : 将值关联到键值k上； 
+
+(4) del d[k ] :删除键值为k的项； 
+
+(5) key in d : 键值key是否在d中，是返回True，否则返回False
+
+#定义字典
+program = {
+    'A':{'worlds':5,'pretzels':15},
+    'B':{'hs':5,'worlds':10},
+    'C':{'hello':10}
+}
+
+exp1:
+#遍历字典中的所有值
+(1)# 循环所有的key：value
+for item in program.keys():
+    print(str(item) + ':' + str(program[item]))
+
+(2)# 用items()方法 k接收key ,v接收value
+for k, v in program.items():
+    print(k, v)
+    
+(3)#keys()方法，获取所有key
+for k in program.keys():
+    print(k)
+    
+(4)#values()方法，获取所有value
+for v in program.values():
+    print(v)
+exp2:
+#计算字典中某个键对应的数量之和
+def total(dict,item):
+    num = 0
+    for k in dict:
+        num = num +dict[k].get(item,0)
+    return num
+print(str(total(program,'worlds')))
+
+
+
