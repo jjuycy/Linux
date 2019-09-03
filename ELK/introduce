@@ -1,0 +1,1 @@
+ELK是ElasticSearch、Logstash和Kibana三个软件的缩写，它们通常是搭配使用，同时也可以搭配Filebeat一起来使用，其协议栈如下图所示：
