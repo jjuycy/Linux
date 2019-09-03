@@ -1,1 +1,2 @@
 ELK--filebeat
+Filebeat是ELK协议栈中的新成员，是一个轻量级的开源日志文件收集软件， 基于 Logstash-Forwarder 源代码开发，是对它的一个替代。
