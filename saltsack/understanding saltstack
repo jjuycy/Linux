@@ -3,12 +3,15 @@ minion上线后先与master端联系，把自己的pub key发过去，这时mast
 minion-key后，也就是master与minion已经互信
 
 master下发ls命令到minion 具体步骤如下:
-1.Salt stack的Master与Minion之间通过ZeroMq进行消息传递，使用了ZeroMq的发布-订阅模式，连接方式包括tcp，ipc
-2.salt命令，将cmd.run ls命令从salt.client.LocalClient.cmd_cli发布到master，获取一个Jodid，根据jobid获取命令执行结果。
-3.master接收到命令后，将要执行的命令发送给客户端minion。
-4.minion从消息总线上接收到要处理的命令，交给minion._handle_aes处理
-5.minion._handle_aes发起一个本地线程调用cmdmod执行ls命令。线程执行完ls后，调用minion._return_pub方法，将执行结果通过消息总线返回给master
-6.master接收到客户端返回的结果，调用master._handle_aes方法，将结果写的文件中
+1.Salt stack的Master与Minion之间通过ZeroMq进行消息传递，使用了ZeroMq的发布-订阅模式，连接方式包括tcp，ipc;
+2.salt命令，将cmd.run ls命令从salt.client.LocalClient.cmd_cli发布到master，获取一个Jodid，根据jobid获取命令执行结果;
+3.master接收到命令后，将要执行的命令发送给客户端minion;
+4.minion从消息总线上接收到要处理的命令，交给minion._handle_aes处理;
+5.minion._handle_aes发起一个本地线程调用cmdmod执行ls命令。线程执行完ls后，调用minion._return_pub方法，将执行结果通过消息总线返回给master;
+6.master接收到客户端返回的结果，调用master._handle_aes方法，将结果写的文件中;
 7.salt.client.LocalClient.cmd_cli通过轮询获取Job执行结果，将结果输出到终端。
 
 
+相关命令：
+## 测试被控主机的连通性
+# salt '*' test.ping
