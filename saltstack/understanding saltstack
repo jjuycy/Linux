@@ -14,4 +14,37 @@ master下发ls命令到minion 具体步骤如下:
 
 相关命令：
 ## 测试被控主机的连通性
-# salt '*' test.ping
+salt '*' test.ping
+
+salt-key:
+salt-key -L 查看key列表
+salt-key -a KYENAME #允许一个key
+salt-key -A  #允许所有
+salt-key -d KEYNAME #删除一个key
+salt-key -D #删除所有key
+
+#使用正则表达式:
+ salt -E 'test[0-9]' test.ping
+
+#指定列表
+ salt -L 'test1,test2' test.ping
+
+#拷贝文件
+ salt-cp '*' salt-file.txt /tmp/
+
+#查看客户端状态
+ salt-run manage.status
+ salt-run manage.versions
+ 
+#Job
+ salt-run jobs.list_jobs   //列出当前master jobs cache中的所有job
+ salt '172.17.0.1' saltutil.running  //查看正在执行的任务
+ salt '172.17.0.1' saltutil.kill_job 20190905155731642293 //删除正在运行的任务
+ salt-run  jobs.active  //查看所有minion当前正在运行的jobs（在所有minion上运行saltutil.running)
+ salt-run jobs.lookup_jid <jid>   //从master jobs cache中查询指定的jid的运行结果
+ saltutil.term_job <jid>   //终止指定的jid进程（信号为15）
+ saltutil.kill_job <jid>   //终止指定的jid进程（信号为9）
+ 
+ 
+ 
+ 
