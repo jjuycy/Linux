@@ -51,4 +51,5 @@ salt-key -D #删除所有key
  salt-run manage.down removekeys=True  //查看down掉的minion，并将其删除
  salt-run manage.status  //查看minion的相关状态
  salt-run manage.versions  //查看slat的所有master和minion的版本信息
+  
  
