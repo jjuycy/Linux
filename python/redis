@@ -1,0 +1,55 @@
+redis的相关命令:
+redis-cli -h host -p port
+host:port>auth passwd    //redis密码认证
+
+key
+    keys * 获取所有的key
+    select 0 选择第一个库 //默认情况下，Redis有16个数据库，从0号数据库到15号数据库
+    //在默认情况下，Redis客户端的数据库为0号数据库，但客户端可以通过执行select命令来切换数据库;
+    切换之后，在客户端中会显示数据库的标号（当然0号数据库不显示）
+    
+    move myString 1 将当前的数据库key移动到某个数据库,目标库有，则不能移动
+    flush db      清除指定库
+    randomkey     随机key
+    type key      类型
+    
+    set key1 value1 设置key
+    get key1    获取key
+    mset key1 value1 key2 value2 key3 value3     批量设置
+    mget key1 key2 key3    批量获取
+    del key1   删除key
+    exists key      判断是否存在key
+    expire key 10   10过期
+    pexpire key 1000 毫秒
+    persist key     删除过期时间
+
+
+python 连接redis:
+//普通连接
+#!/usr/bin/python
+# -*- coding:utf-8 -*-
+
+import redis
+
+# 建立连接
+conn = redis.Redis(host='host', port=port,password="passwd",db=dbname)
+
+conn.set("test","hello") //添加key
+val = conn.get("test")
+print(val)
+
+
+//连接池连接
+import redis
+
+# 连接池
+pool = redis.ConnectionPool(host='192.168.58.132', port=6379,password="123456",db=0,max_connections=1024)
+conn = redis.Redis(connection_pool=pool)
+print(conn.get("test"))
+
+#批量设置值
+conn.mset({'test2':"zhangsan",'test3':"lisi"})
+
+#批量获取值
+name = ["test1","test2","test3"]
+print(conn.mget(name))
