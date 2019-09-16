@@ -23,3 +23,5 @@ Firewalld与iptables对比
   firewall-cmd --zone="public" --add-forward-port=port=8080:proto=tcp:toport=12345 //同服务器端口转发 80端口转发到12345端口
   firewall-cmd --zone=public --add-masquerade //不同服务器端口转发，要先开启 masquerade
   firewall-cmd --zone="public" --add-forward-port=port=80:proto=tcp:toport=8080:toaddr=192.168.1.137 //不同服务器端口转发，转发到192.168.1.137的8080端口
+  
+  firewall-cmd --reload //加载配置
