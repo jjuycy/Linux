@@ -7,9 +7,9 @@ Firewalld与iptables对比
 
 操作命令与解析:
   运行时配置和永久配置
-  firewall-cmd –zone=public –add-service=smtp //运行时配置，重启后失效
-  firewall-cmd –permanent –zone=public –add-service=smtp //永久配置，不影响当前连接，重启后生效  --permanent永久生效，没有此参数重启后失效
-  firewall-cmd –runtime-to-permanent //将运行时配置保存为永久配置
+  firewall-cmd --zone=public –add-service=smtp //运行时配置，重启后失效
+  firewall-cmd --permanent –zone=public –add-service=smtp //永久配置，不影响当前连接，重启后生效  --permanent永久生效，没有此参数重启后失效
+  firewall-cmd --runtime-to-permanent //将运行时配置保存为永久配置
 
   firewall-cmd --get-services //列出所有预设服务
   firewall-cmd --list-services //列出当前服务
