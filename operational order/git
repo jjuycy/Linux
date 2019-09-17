@@ -1,0 +1,39 @@
+Linux 下git操作
+git 官网:
+https://git-scm.com/
+Git是一个免费的开源 分布式版本控制系统，旨在快速高效地处理从小型到大型项目的所有事务。
+
+名词解析：
+工作区,暂存区
+工作区Workspace:就是你在电脑里能看到的目录，即你代码放的那个文件夹。即时性强，对文件的所有更改都会立刻提现在这里。
+版本库:工作区有一个隐藏目录 .git，这个不算工作区，而是Git的版本库。
+暂存区 Index/Stage:git add以后，当前对文件的更改会保存到这个区
+本地仓库Repository:git commit以后，当前暂存区里对文件的更改会提交到本地仓库
+远程仓库Remote:远程仓库名一般叫origin。git push以后，本地仓库里优先于远程仓库的commit会被push到远程仓库
+
+
+git主要的几个命令:
+git clone //
+git add //将工作区的修改提交到暂存区
+git commit //将暂存区的修改提交到当前分支
+git reset //回退到某一个版本
+git stash //保存某次修改
+git pull //从远程更新代码
+git push //将本地代码更新到远程分支上
+git reflog // 查看历史命令
+git status //查看当前仓库的状态
+git diff //查看修改
+git log //查看提交历史
+git revert //回退某个修改
+
+git add -A //保存所有的修改
+git add . //保存新的添加和修改，但是不包括删除
+git add -u //保存修改和删除，但是不包括新建
+
+新增文件
+git commit –am "add file"
+本地文件删除，提交至仓库
+rm -rf file dir 
+git commit -am 'rm-file-dir' && git push
+远程
+git pull
