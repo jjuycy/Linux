@@ -1,0 +1,19 @@
+FTP的搭建:
+#服务器
+[root@localhost ~]# cat /etc/redhat-release 
+CentOS Linux release 7.6.1810 (Core) 
+
+#检查服务器是否安装ftp服务:
+rpm -qa |grep vsftpd
+#安装vsftp
+yum install vsftpd -y
+#设置开机自启
+systemctl enable vsftpd.service
+#修改配置文件
+vim /etc/vsftpd/vsftpd.conf
+#服务启动
+systemctl start vsftpd
+#21端口加防火墙对外
+firewall-cmd --permanent --zone=public --add-port=21/tcp
+firewall-cmd reload
+ 
