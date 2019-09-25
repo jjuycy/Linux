@@ -3,6 +3,5 @@ centos 7 启动:
 systemctl start salt-api
 
 #使用ip地址
-
 salt -S 192.168.1.50 test.ping
 salt -S 192.168.1.0/24 test.ping
