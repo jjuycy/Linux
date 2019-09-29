@@ -20,6 +20,7 @@ Firewalld与iptables对比
   firewall-cmd --permanent --zone=public --add-port=161/udp //开放udp端口
   firewall-cmd --permanent --zone=public --remove-port=80/tcp //禁用端口
   firewall-cmd --permanent --zone=public --add-port=8080-9999/tcp //开放端口区间
+  firewall-cmd --permanent --add-source=192.168.0.0/16 --zone=trusted //开放网段内的机器加白名单
   firewall-cmd --zone="public" --add-forward-port=port=8080:proto=tcp:toport=12345 //同服务器端口转发 80端口转发到12345端口
   firewall-cmd --zone=public --add-masquerade //不同服务器端口转发，要先开启 masquerade
   firewall-cmd --zone="public" --add-forward-port=port=80:proto=tcp:toport=8080:toaddr=192.168.1.137 //不同服务器端口转发，转发到192.168.1.137的8080端口
