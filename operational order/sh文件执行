@@ -1,0 +1,27 @@
+shell 脚本文件的执行方式
+./x.sh,sh x.sh ,bash x.sh,source x.sh
+
+四种执行脚本方式的区别:
+(1) ./x.sh 
+x.sh需要有"执行权限";
+打开一个subshell去读取、执行x.sh
+(2)sh x.sh
+打开一个subshell去读取、执行x.sh，而x.sh不需要有"执行权限"
+通常在subshell里运行的脚本里设置变量，不会影响到父shell的
+(3)bash x.sh
+同(2)sh 
+(4)source x.sh
+在当前shell内去读取、执行x.sh，而x.sh不需要有"执行权限"
+source命令可以简写为"." exp: [user]$. x.sh
+
+x.sh如下: 
+#!/bin/bash
+echo "step 1 sleeping"
+sleep 100
+echo "step 1 end!"
+
+echo "step 2 sleeping"
+sleep 100
+echo "step 2 end!"
+
+脚本执行时可按ctrl+c进行测试
