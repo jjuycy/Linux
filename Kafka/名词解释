@@ -1,0 +1,26 @@
+1.broker
+Kafka单个节点称为broker，一个Kafka服务就是一个broker，多个broker可以组成一个Kafka集群.
+
+2.topic (主题)
+ topic相当于传统消息系统MQ中的一个队列queue，producer端发送的message必须指定是发送到哪个topic上.在一个大型的商城系统中，
+ 可以根据功能的不同，区分不同的topic(订单的topic,登录的topic,金额的topic等等)
+ 
+3. partition(分区)
+一个topic下面可以有多个partition,kafka在接收到message后，会将这个message进行load blance根据(hash(message)%[broker_num])均匀的将这个message分配在不同的partition上。
+partition的配置个数一般与kafka的集群数保持一致即可(即broker的数量)
+
+4.partition replica (分区副本)
+partition replica 是partition 的副本数据，是为了防止数据丢失的一种优化，partition 不会和 replica 在同一台broker上。
+Replica 的数量与partition数量保持一致即可做到高可用
+
+5. Segment（片断）
+partition 在物理结构上可以分为多个segment，每个segment 上存放着message信息
+
+6.producer
+生产message,发送到topic上
+
+7.consumer
+订阅指定的topic，消费topic上面的message信息
+
+8.Consumer group
+多个consumer 可以组成一个consumer group
