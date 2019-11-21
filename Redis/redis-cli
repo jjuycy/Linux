@@ -1,0 +1,25 @@
+redis-cli -h host -p port -a password
+选择库:
+SELECT index 
+
+redis 127.0.0.1:6379> SET db_number 0         # 默认使用 0 号数据库
+OK
+ 
+redis 127.0.0.1:6379> SELECT 1                # 使用 1 号数据库
+OK
+ 
+redis 127.0.0.1:6379[1]> GET db_number        # 已经切换到 1 号数据库，注意 Redis 现在的命令提示符多了个 [1]
+(nil)
+ 
+redis 127.0.0.1:6379[1]> SET db_number 1
+OK
+ 
+redis 127.0.0.1:6379[1]> GET db_number
+"1"
+ 
+redis 127.0.0.1:6379[1]> SELECT 2           # 再切换到 2 号数据库
+OK
+ 
+redis 127.0.0.1:6379[2]>                      # 提示符从 [1] 改变成了 [2]
+
+ 
