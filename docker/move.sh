@@ -6,3 +6,12 @@ docker ps --no-trunc
 docker commit -p CONTAINER ID "CONTAINER ID-backup"
 docker images 命令来查看Docker镜像
 
+将docker镜像导出到本地
+docker save -o /data/CONTAINE-backup.tar "CONTAINER ID-backup"
+
+将导出的镜像导入新的docker机器
+ docker load -i /data/container-backup.tar
+ 
+ docker run -itd --name container-test container-backup  /bin/bash
+ 
+ 
