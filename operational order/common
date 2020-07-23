@@ -1,0 +1,36 @@
+commond used
+统计了每一种状态的tcp连接数量(netstat 命令)
+netstat -antp | awk '{a[$6]++}END{ for(x in a)print x,a[x]}'
+
+ss命令
+ 查看系统正在监听的tcp连接
+ ss -atr 
+ss -atn #仅ip
+
+查看系统中所有连接
+ss -alt
+查看监听port的进程 pid
+ss -ltp | grep port
+查看进程pid占用了哪些端口
+ss -ltp | grep pid
+显示所有 UDP 连接
+ss -u -a 
+看TCP sockets，使用-ta选项
+查看UDP sockets，使用-ua选项
+查看RAW sockets，使用-wa选项
+查看UNIX sockets，使用-xa选项
+和某个 IP 的所有连接
+
+ss dst 127.0.0.1
+ss dst 127.0.0.1:http
+ss dst 127.0.0.1:smtp
+ss dst 127.0.0.1:443
+
+显示所有的 HTTP 连接
+ss  dport = :http
+
+查看连接本机最多的前 10 个 IP 地址
+
+netstat -antp | awk '{print $4}' | cut -d ':' -f1 | sort | uniq -c  | sort -n -k1 -r | head -n 10
+
+
