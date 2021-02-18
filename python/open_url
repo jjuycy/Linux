@@ -1,0 +1,19 @@
+#coding:utf-8
+import time
+import webbrowser
+import os
+import random
+
+def open_url():
+    with open ("url.txt") as f :
+        for line in f.readlines():
+            
+            time.sleep(1)
+            url = line.strip()
+            webbrowser.open(url)
+print ("hello!")
+
+
+
+if __name__ == '__main__': 
+    open_url()
