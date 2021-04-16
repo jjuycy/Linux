@@ -1,0 +1,38 @@
+ansible 学习笔记：
+官网:https://www.ansible.com/
+AUTOMATION FOR EVERYONE
+组件：
+Ansible：Ansible核心程序。
+HostInventory：记录由Ansible管理的主机信息，包括端口、密码、ip等。
+Playbooks：“剧本”YAML格式文件，多个任务定义在一个文件中，定义主机需要调用哪些模块来完成的功能。
+CoreModules：核心模块，主要操作是通过调用核心模块来完成管理任务。
+CustomModules：自定义模块，完成核心模块无法完成的功能，支持多种语言。
+ConnectionPlugins：连接插件，Ansible和Host通信使用
+
+任务执行模式：
+  。ad-hoc模式 使用单个模块，支持批量执行单条命令
+  。playbook模式 playbook 通过多个task集合完成一类功能
+
+执行流程
+  首先读取ansible.cfg中的配置，根据规则获取 Inventory 中的管理列表，并行的在这些主机中执行配置的任务，最后等待执行返回的结果。
+
+ansible 程序结构
+安装目录如下(yum安装)：
+ 　 配置文件目录：/etc/ansible/
+　　执行文件目录：/usr/bin/
+　　Lib库依赖目录：/usr/lib/pythonX.X/site-packages/ansible/
+　　Help文档目录：/usr/share/doc/ansible-X.X.X/
+　　Man文档目录：/usr/share/man/man1/
+
+ansible 命令
+  /usr/bin/ansible　　Ansibe AD-Hoc 临时命令执行工具，常用于临时命令的执行
+  /usr/bin/ansible-playbook　　Ansible 定制自动化的任务集编排工具
+
+ansible 是基于 ssh 协议实现的，所以其配置公私钥的方式与 ssh 协议的方式相同
+  #1.生成私钥
+  [root@server ~]# ssh-keygen 
+  #2.向主机分发私钥
+  [root@server ~]# ssh-copy-id root@slaveip
+
+检验主机连通性
+  ansible web -m ping
