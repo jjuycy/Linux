@@ -1,0 +1,27 @@
+from smtplib import SMTP_SSL
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+from email.header import Header
+
+
+def send_message():
+    mail_server = 'smtp.exmail.qq.com'
+    pwd = '*******'
+    from_mail = '*******'
+    to_mail = '*******'
+    msg = MIMEMultipart()
+
+    msg['Subject'] = Header('camera', 'UTF-8')
+    msg['From'] = from_mail
+    msg['To'] = Header('mail', 'UTF-8')
+    msg.attach(MIMEText("photo", 'html', 'UTF-8'))
+
+    image = MIMEText(open('image.jpg', 'rb').read(), 'base64', 'utf-8')
+    image['Content-Type'] = 'imag/jpeg'
+    msg.attach(image)
+
+    smtp = SMTP_SSL(mail_server)
+    smtp.login(from_mail, pwd)
+    smtp.sendmail(from_mail,to_mail,msg.as_string())
+
+    smtp.quit()
