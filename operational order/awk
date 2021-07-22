@@ -1,0 +1,2 @@
+insert 包含多条记录，筛选出1条
+awk -F '[)(]' '{for(i=1;i<=NF;i++) if(match($i,"关键字")) {print $i; exit}}' xxx.sql
