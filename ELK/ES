@@ -12,3 +12,15 @@ GET _cluster/stats?human&pretty
 #查看磁盘占用情况
 GET _cat/allocation?v
 
+Elasticsearch SQL支持三种client： REST Interface， command-line，JDBC
+建议先在kibana中测试(可以一次执行多个SQL)，查询通过之后把查询copy到项目中进行测试。
+如果在优化SQL语句之后还不满足查询需求，可以拿SQL和DSL混用，ES会先根据SQL进行查询，然后根据DSL语句对SQL的执行结果进行二次查询
+例如：
+POST /_xpack/sql?format=txt
+{
+  "query": "select request_time,message from \"index\" where request_time > 1 order by request_time desc limit 5 ",
+  "filter": {"range": {"@timestamp": {"gt": "now-15m", "lt": "now"}}}
+  }
+  
+  这个查询就会先根据“query”后面的SQL进行查询，然后用执行“filter”和“fetch_size” DSL语法对查询结果进行过滤，进而返回最终结果。
+  
