@@ -1,0 +1,63 @@
+#!/bin/bash
+
+echo "start execute sql...."
+date=`date +%Y-%m-%d-%H-%M`
+host=""
+password=""
+sql=`ls /opt/update/*.sql`
+
+if [ $? -eq 0 ]; then
+
+if [ -e $sql ]; then
+
+echo "$sql"
+mysql -uroot -h${host} -P3306 -p${password} -e "show databases " | grep "new2" | grep -v "log" > update.txt
+num=`cat $sql | grep -E -i "delete|drop" | wc -l`
+if [ $num -eq 0 ];then
+  echo "sql 语句不涉及delete drop语句！开始执行刷sql"
+    for i in `cat update.txt`
+      do 
+	mysql -uroot -h${host} -P3306 -p"${password}" -e "use ${i};source ${sql};"
+	if [ $? -eq 0 ]; then
+		echo -e "\e[32m mysql -uroot -h${host} -P3306 -p\"${password}\" -e 'use ${i};source ${sql};' success!!! \e[0m"
+		echo " mysql -uroot -h${host} -P3306 -p\"${password}\" -e 'use ${i};source ${sql};' success!!!" >> ${date}_success.txt
+	else
+		echo -e "\e[31m mysql -uroot -h${host} -P3306 -p\"${password}\" -e 'use ${i};source ${sql};' failed!!! \e[0m"
+		echo " mysql -uroot -h${host} -P3306 -p\"${password}\" -e 'use ${i};source ${sql};' failed!!!" >> ${date}_failed.txt
+	fi
+    done
+
+else
+  echo "sql 语句涉及delete drop语句！检查后进行操作！！！"
+    sleep 10
+    read -p "是否已经check sql ~ 是否执行sql  yes/no: " choice
+    if [ $choice = yes ];then
+          for i in `cat update.txt`
+          do
+            mysql -uroot -h${host} -P3306 -p"${password}" -e "use ${i};source ${sql};"
+            if [ $? -eq 0 ]; then
+                    echo -e "\e[32m mysql -uroot -h${host} -P3306 -p\"${password}\" -e 'use ${i};source ${sql};' success!!! \e[0m"
+		    echo " mysql -uroot -h${host} -P3306 -p\"${password}\" -e 'use ${i};source ${sql};' success!!!" >> ${date}_success.txt
+            else
+                    echo -e "\e[31m mysql -uroot -h${host} -P3306 -p\"${password}\" -e 'use ${i};source ${sql};' failed!!! \e[0m"
+                    echo " mysql -uroot -h${host} -P3306 -p\"${password}\" -e 'use ${i};source ${sql};' failed!!!" >> ${date}_failed.txt
+            fi
+          done
+    else
+       echo "检查有问题，请重新上传sql。"
+       exit 1
+    fi
+
+fi
+
+mv $sql /opt/update/old/
+
+else
+ echo "无更新 ${sql}!"
+fi
+
+else 
+
+ echo "无更新sql!"
+fi
+
