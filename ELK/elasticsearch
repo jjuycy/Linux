@@ -1,0 +1,9 @@
+elasticsearch启动报错：
+memory locking requested for elasticsearch process but memory is not locked
+解决方案：
+文件:/etc/systemd/system/elasticsearch.service.d/elasticsearch.conf
+写入
+[Service]
+LimitMEMLOCK=infinity
+然后
+systemctl daemon-reload
