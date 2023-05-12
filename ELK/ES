@@ -24,4 +24,14 @@ POST /_xpack/sql?format=txt
   
   这个查询就会先根据“query”后面的SQL进行查询，然后用执行“filter”和“fetch_size” DSL语法对查询结果进行过滤，进而返回最终结果。
   
+ES有报错 maximum shards open：
+问题解决：
 
+PUT /_cluster/settings
+{
+  "transient": {
+    "cluster": {
+      "max_shards_per_node":10000
+    }
+  }
+}
