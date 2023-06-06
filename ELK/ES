@@ -27,6 +27,7 @@ POST /_xpack/sql?format=txt
 ES有报错 maximum shards open：
 问题解决：
 
+方法1
 PUT /_cluster/settings
 {
   "transient": {
@@ -35,3 +36,15 @@ PUT /_cluster/settings
     }
   }
 }
+
+
+方法2：
+curl -XPUT http://127.0.0.1:9200/_cluster/settings -H "Content-Type: application/json" -d '{"transient":{"cluster":{"max_shards_per_node":10000}}}'
+Elasticsearch 磁盘使用率超过警戒水位线问题处理：
+
+    "transient": {  
+      "cluster.routing.allocation.disk.watermark.low":"90%" ,
+	    "cluster.routing.allocation.disk.watermark.high":"95%"
+    }
+    
+GET _cluster/settings
